@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Películas</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <div class="contenedor-busqueda">
+        <h1>Buscador de Películas</h1>
+        <div class="barra-busqueda">
+            <input type="text" id="campoBusqueda" placeholder="Buscar películas...">
+            <button id="botonBuscar">Buscar</button>
+        </div>
+        <div class="contenedor-generos">
+            <h2>Géneros</h2>
+            <div class="botones-genero">
+                <!-- Cada botón tiene un data-attribute con el ID del género según la API de TMDB -->
+                <button class="boton-genero" data-genero="28">Acción</button>
+                <button class="boton-genero" data-genero="12">Aventura</button>
+                <button class="boton-genero" data-genero="53">Thriller</button>
+                <button class="boton-genero" data-genero="27">Terror</button>
+                <button class="boton-genero" data-genero="35">Comedia</button>
+                <button class="boton-genero" data-genero="18">Drama</button>
+                <button class="boton-genero" data-genero="10749">Romance</button>
+                <button class="boton-genero" data-genero="878">Ciencia Ficción</button>
+                <button class="boton-genero" data-genero="16">Animación</button>
+                <button class="boton-genero" data-genero="80">Crimen</button>
+            </div>
+        </div>
+    </div>
+    <div id="resultados"></div>
+    <script src="funciones.js"></script>
+</body>
+</html> 
