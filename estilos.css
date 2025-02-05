@@ -1,25 +1,159 @@
 /* Estilos generales de la página */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', Arial, sans-serif;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     background-color: #141414;
     color: white;
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 100px;
+}
+
+@media (max-width: 1200px) {
+    body {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+}
+
+/* Fondo con posters de películas */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('media/imagenes/peliculas.jpg') repeat;
+    z-index: -1;
+    opacity: 0.1;
+}
+
+/* Controles de música */
+.controles-musica {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    z-index: 1000;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.85);
+    padding: 12px 25px;
+    border-radius: 40px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.controles-musica:hover {
+    background: rgba(0, 0, 0, 0.95);
+    transform: translateX(-50%) translateY(-5px);
+    box-shadow: 0 8px 25px rgba(229, 9, 20, 0.3);
+}
+
+.boton-musica {
+    background: rgba(229, 9, 20, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.boton-musica::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.boton-musica:hover::after {
+    opacity: 1;
+}
+
+.boton-musica:hover {
+    background: #E50914;
+    transform: scale(1.1) rotate(5deg);
+}
+
+.boton-musica i {
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+.boton-musica:active i {
+    transform: scale(0.9);
+}
+
+.volumen-actual {
+    color: white;
+    background: rgba(229, 9, 20, 0.8);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    min-width: 60px;
+    text-align: center;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.volumen-actual:hover {
+    background: #E50914;
+    transform: scale(1.05);
 }
 
 /* Contenedor principal de la sección de búsqueda */
 .contenedor-busqueda {
     text-align: center;
     margin-bottom: 30px;
+    padding: 20px;
 }
 
-/* Estilo del título principal */
+/* Estilo del título principal con animación */
 .contenedor-busqueda h1 {
     color: #E50914;
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    font-size: 3em;
+    position: relative;
+    display: inline-block;
+    text-shadow: 2px 2px 4px rgba(229, 9, 20, 0.3);
+    animation: titlePulse 2s infinite;
+}
+
+@keyframes titlePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+@media (max-width: 768px) {
+    .contenedor-busqueda h1 {
+        font-size: 2em;
+    }
 }
 
 /* Estilo del subtítulo */
@@ -58,44 +192,68 @@ body {
     margin: 0 auto;
 }
 
-/* Contenedor de la barra de búsqueda */
+/* Barra de búsqueda mejorada */
 .barra-busqueda {
     margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
-/* Campo de entrada de búsqueda */
 #campoBusqueda {
-    padding: 12px;
-    width: 400px;
+    padding: 15px 20px;
+    width: 100%;
+    max-width: 400px;
     font-size: 16px;
     border: 2px solid #E50914;
-    border-radius: 4px;
-    background-color: #333;
+    border-radius: 25px;
+    background-color: rgba(51, 51, 51, 0.9);
     color: white;
-    margin-right: 10px;
+    transition: all 0.3s ease;
 }
 
-/* Estilo del placeholder del campo de búsqueda */
-#campoBusqueda::placeholder {
-    color: #888;
+#campoBusqueda:focus {
+    outline: none;
+    box-shadow: 0 0 15px rgba(229, 9, 20, 0.4);
+    transform: scale(1.02);
 }
 
-/* Botón de búsqueda */
 #botonBuscar {
-    padding: 12px 24px;
+    padding: 15px 30px;
     font-size: 16px;
     background-color: #E50914;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 25px;
     cursor: pointer;
     text-transform: uppercase;
     font-weight: bold;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Efecto hover del botón de búsqueda */
 #botonBuscar:hover {
-    background-color: #f40612;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(229, 9, 20, 0.6);
+}
+
+#botonBuscar::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+}
+
+#botonBuscar:hover::after {
+    transform: rotate(45deg) translate(50%, 50%);
 }
 
 /* Contenedor de la sección de géneros */
@@ -110,68 +268,152 @@ body {
     font-size: 1.5em;
 }
 
-/* Grid de botones de género */
+/* Botones de género mejorados */
 .botones-genero {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 15px;
     justify-content: center;
+    padding: 20px 0;
 }
 
-/* Estilo de los botones de género */
 .boton-genero {
-    padding: 8px 16px;
+    padding: 12px 24px;
     font-size: 14px;
-    background-color: #333;
+    background-color: rgba(51, 51, 51, 0.9);
     color: white;
-    border: 1px solid #E50914;
-    border-radius: 20px;
+    border: 2px solid #E50914;
+    border-radius: 25px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
 
-/* Efecto hover de los botones de género */
+.boton-genero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(229, 9, 20, 0.2),
+        transparent
+    );
+    transition: all 0.5s ease;
+}
+
+.boton-genero:hover::before {
+    left: 100%;
+}
+
 .boton-genero:hover {
     background-color: #E50914;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(229, 9, 20, 0.4);
 }
 
-/* Estilo del botón de género activo */
 .boton-genero.activo {
     background-color: #E50914;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(229, 9, 20, 0.6);
 }
 
-/* Grid de resultados de películas */
+/* Animaciones para las cartas de películas */
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Grid responsivo de resultados */
 #resultados {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px;
     padding: 20px;
+    position: relative;
+}
+
+@media (max-width: 1200px) {
+    #resultados {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    #resultados {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    #resultados {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 10px;
+    }
 }
 
 /* Tarjeta individual de película */
 .carta {
-    background: #333;
-    border-radius: 8px;
+    background: rgba(51, 51, 51, 0.9);
+    border-radius: 12px;
     overflow: hidden;
-    transition: transform 0.3s ease;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+    animation: aparecer 0.5s ease forwards;
+    opacity: 0;
+    transform-origin: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    width: 100%;
 }
 
-/* Efecto hover de la tarjeta */
-.carta:hover {
-    transform: translateY(-10px);
+/* Contenedor de la imagen */
+.carta .contenedor-imagen {
+    position: relative;
+    width: 100%;
+    padding-top: 150%; /* Proporción 2:3 para pósters de películas */
+    overflow: hidden;
 }
 
 /* Imagen del póster de la película */
 .carta img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 300px;
+    height: 100%;
     object-fit: cover;
+    transition: all 0.5s ease;
 }
 
 /* Contenedor de información de la película */
 .carta .info {
     padding: 15px;
+    background: rgba(51, 51, 51, 0.95);
+    transition: all 0.3s ease;
+}
+
+.carta:hover {
+    transform: scale(1.05);
+    z-index: 100;
+    box-shadow: 0 0 30px rgba(229, 9, 20, 0.7);
+}
+
+.carta:hover img {
+    transform: scale(1.1);
 }
 
 /* Título de la película */
@@ -180,29 +422,250 @@ body {
     font-size: 16px;
     color: white;
     margin-bottom: 8px;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Contenedor de metadatos (valoración y fecha) */
+.carta .meta-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
 }
 
 /* Valoración de la película */
 .carta .valoracion {
     color: #ffd700;
     font-weight: bold;
-    margin-bottom: 8px;
 }
 
 /* Fecha de lanzamiento */
 .carta .fecha {
-    color: #888;
-    font-size: 14px;
+    color: #aaa;
 }
 
-/* Descripción de la película con límite de 3 líneas */
-.carta .descripcion {
-    font-size: 14px;
-    color: #ccc;
-    margin-top: 10px;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+/* Icono de expandir */
+.carta .icono-expandir {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: rgba(229, 9, 20, 0.9);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.carta:hover .icono-expandir {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.carta::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.carta:hover::after {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal mejorado */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+
+.modal.activo {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-contenido {
+    max-width: 90%;
+    max-height: 90vh;
+    position: relative;
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.modal.activo .modal-contenido {
+    transform: scale(1);
+}
+
+.modal-contenido img {
+    max-height: 70vh;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(229, 9, 20, 0.3);
+}
+
+.modal-contenido .info {
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+.modal-contenido h2 {
+    color: white;
+    font-size: 28px;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.modal-contenido .meta-info {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.modal-contenido .valoracion {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.modal-contenido .fecha {
+    color: #aaa;
+}
+
+.modal-contenido .descripcion {
+    color: #fff;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 16px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+    .modal-contenido img {
+        max-height: 50vh;
+    }
+
+    .modal-contenido h2 {
+        font-size: 24px;
+    }
+
+    .modal-contenido .meta-info {
+        font-size: 16px;
+    }
+
+    .modal-contenido .descripcion {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-contenido img {
+        max-height: 40vh;
+    }
+
+    .modal-contenido h2 {
+        font-size: 20px;
+    }
+
+    .modal-contenido .meta-info {
+        font-size: 14px;
+    }
+
+    .modal-contenido .descripcion {
+        font-size: 13px;
+    }
+}
+
+/* Controles de música responsivos */
+@media (max-width: 768px) {
+    .controles-musica {
+        padding: 10px 20px;
+        gap: 10px;
+    }
+
+    .boton-musica {
+        width: 40px;
+        height: 40px;
+    }
+
+    .volumen-actual {
+        padding: 6px 12px;
+        font-size: 12px;
+        min-width: 50px;
+    }
+
+    .carta img {
+        height: 300px;
+    }
+    
+    .carta .info {
+        padding: 15px;
+    }
+    
+    .carta h3 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .controles-musica {
+        bottom: 15px;
+        padding: 8px 15px;
+        gap: 8px;
+    }
+
+    .boton-musica {
+        width: 35px;
+        height: 35px;
+    }
+
+    .boton-musica i {
+        font-size: 14px;
+    }
+
+    .carta img {
+        height: 240px;
+    }
+    
+    .carta .info {
+        padding: 12px;
+    }
+    
+    .carta h3 {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+    
+    .carta .descripcion {
+        font-size: 13px;
+        line-height: 1.4;
+        -webkit-line-clamp: 2;
+    }
 } 
