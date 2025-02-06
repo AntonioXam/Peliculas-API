@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     
     let cancionActual = 0;
-    let reproductor = new Audio(canciones[cancionActual]);
+    let reproductor = new Audio();
     let reproduciendo = false;
     
     // Elementos del DOM para música
@@ -37,8 +37,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const volumenActual = document.querySelector('.volumen-actual');
     const modal = document.getElementById('modal');
     
-    // Configuración inicial del volumen
-    reproductor.volume = 1.0;
+    // Configuración inicial del reproductor
+    reproductor.volume = 0.5;
+    reproductor.autoplay = true;
+    reproductor.preload = 'auto';
+    volumenActual.textContent = '50%';
+
+    // Cargar y reproducir la primera canción
+    function cargarYReproducir() {
+        reproductor.src = canciones[cancionActual];
+        reproductor.load();
+        
+        reproductor.addEventListener('canplaythrough', function iniciarReproduccion() {
+            reproductor.play()
+                .then(() => {
+                    reproduciendo = true;
+                    iconoPlayPause.className = 'fas fa-pause';
+                })
+                .catch(error => {
+                    console.log("Error al reproducir:", error);
+                    // Intentar reproducir con interacción del usuario
+                    document.body.addEventListener('click', function reproducirConClick() {
+                        reproductor.play();
+                        reproduciendo = true;
+                        iconoPlayPause.className = 'fas fa-pause';
+                        document.body.removeEventListener('click', reproducirConClick);
+                    }, { once: true });
+                });
+            reproductor.removeEventListener('canplaythrough', iniciarReproduccion);
+        });
+    }
+
+    // Iniciar la reproducción
+    cargarYReproducir();
+
+    // Manejar cuando termina una canción
+    reproductor.addEventListener('ended', () => {
+        siguienteCancion();
+    });
     
     // Funciones de control de música
     function togglePlayPause() {
@@ -94,8 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Muestra el mensaje inicial de bienvenida cuando se carga la página.
     divResultados.innerHTML = `
         <div class="mensaje-inicial">
-            <h2>¡Bienvenido al Buscador de Películas!</h2>
-            <p>Puedes buscar películas por nombre o seleccionar un género para ver películas aleatorias.</p>
+            <h2>Descubre el Cine</h2>
+            <p>Explora el fascinante mundo del séptimo arte</p>
         </div>
     `;
 
@@ -189,6 +225,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Event listener para la tarjeta
             divPelicula.addEventListener('click', () => {
                 modal.querySelector('.modal-contenido').innerHTML = `
+                    <button class="modal-cerrar" title="Cerrar">
+                        <i class="fas fa-times"></i>
+                    </button>
                     <img src="${imagenUrl}" alt="${title}">
                     <div class="info">
                         <h2>${title}</h2>
@@ -200,6 +239,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
                 modal.classList.add('activo');
+
+                // Event listener para el botón de cerrar
+                const botonCerrar = modal.querySelector('.modal-cerrar');
+                botonCerrar.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Evita que el clic se propague al modal
+                    modal.classList.remove('activo');
+                });
             });
 
             divResultados.appendChild(divPelicula);
